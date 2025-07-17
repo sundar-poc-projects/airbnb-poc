@@ -1,0 +1,8 @@
+To build our app    -->   ./mvnw clean package -DskipTests
+To build -->    docker build -t hotel-service:latest .
+To run   -->    docker run -p 8081:8081 --network=host hotel-service:latest
+
+To restart the docker
+docker-compose down
+docker-compose up --build
+

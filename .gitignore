@@ -1,0 +1,14 @@
+# Java
+*.class
+*.jar
+*.war
+*.log
+target/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+
+# Docker
+*.env
