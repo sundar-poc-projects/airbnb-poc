@@ -6,3 +6,7 @@ To restart the docker
 docker-compose down
 docker-compose up --build
 
+
+To go inside the container --> docker exec -it airbnb-poc-kafka-1 bash
+To check topics creation --> kafka-topics --bootstrap-server localhost:9093 --list
+To check how many messages ?  --> kafka-run-class kafka.tools.GetOffsetShell --broker-list localhost:9093 --topic hotel.updated --time -1

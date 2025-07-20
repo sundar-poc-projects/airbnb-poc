@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KafkaProducer {
 
-    private final KafkaTemplate<String, Hotel> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
     private static final String TOPIC = "hotel.updated";
 
-    public void sendHotelEvent(Hotel hotel) {
+    public void sendHotelEvent(String hotel) {
         kafkaTemplate.send(TOPIC, hotel);
-        System.out.println("📤 Hotel event sent to Kafka: " + hotel.getName());
+        System.out.println("📤 Hotel event sent to Kafka: " + hotel);
     }
 }

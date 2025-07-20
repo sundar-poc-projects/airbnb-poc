@@ -1,5 +1,6 @@
 package com.ko.hotel.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ko.hotel.entity.Hotel;
 import com.ko.hotel.kafka.KafkaProducer;
 import com.ko.hotel.repository.HotelRepository;
@@ -16,9 +17,18 @@ public class HotelService {
 
     private final KafkaProducer kafkaProducer;
 
+    private final ObjectMapper objectMapper;
+
     public Hotel saveHotel(Hotel hotel) {
         Hotel saved = hotelRepository.save(hotel);
-        kafkaProducer.sendHotelEvent(saved); // Send event after saving
+        try {
+            // Convert Hotel object to JSON string
+            String hotelJson = objectMapper.writeValueAsString(saved);
+            kafkaProducer.sendHotelEvent(hotelJson); // send JSON string instead of object
+        } catch (Exception e) {
+            // Handle or log the exception as needed
+            e.printStackTrace();
+        }
         return saved;
     }
 
