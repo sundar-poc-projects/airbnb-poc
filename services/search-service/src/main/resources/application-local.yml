@@ -1,0 +1,23 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: search-service
+
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+
+  elasticsearch:
+    uris: http://localhost:9200
+
+  jackson:
+    default-property-inclusion: non_null
+
+elasticsearch:
+  mapping:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+  repositories:
+    enabled: true

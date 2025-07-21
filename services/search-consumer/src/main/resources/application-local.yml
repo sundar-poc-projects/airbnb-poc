@@ -5,6 +5,11 @@ spring:
   application:
     name: search-consumer
 
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+
   kafka:
     bootstrap-servers: localhost:9093
     consumer:
@@ -20,7 +25,16 @@ spring:
   elasticsearch:
     uris: http://localhost:9200
 
+
+  jackson:
+    default-property-inclusion: non_null
+
 logging:
   level:
     org.springframework: DEBUG
 
+elasticsearch:
+  mapping:
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSSZ
+  repositories:
+    enabled: true

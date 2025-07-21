@@ -64,6 +64,15 @@ services:
       timeout: 5s
       retries: 5
 
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.1
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+
   search-consumer:
     build:
       context: ./services/search-consumer
@@ -85,6 +94,16 @@ services:
     depends_on:
       - kafka
       - mysql
+
+  search-service:
+    build:
+      context: ./services/search-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+    depends_on:
+      - elasticsearch
 
 volumes:
   mysql_data:
