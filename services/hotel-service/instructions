@@ -10,3 +10,8 @@ docker-compose up --build
 To go inside the container --> docker exec -it airbnb-poc-kafka-1 bash
 To check topics creation --> kafka-topics --bootstrap-server localhost:9093 --list
 To check how many messages ?  --> kafka-run-class kafka.tools.GetOffsetShell --broker-list localhost:9093 --topic hotel.updated --time -1
+
+
+To run only infra -->  docker-compose up -d zookeeper kafka mysql redis elasticsearch kibana kafka-ui
+
+To open redis --> docker exec -it $(docker ps --filter ancestor=redis:7 --format "{{.ID}}") redis-cli
