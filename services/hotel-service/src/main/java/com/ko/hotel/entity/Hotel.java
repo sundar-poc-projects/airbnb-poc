@@ -1,9 +1,12 @@
 package com.ko.hotel.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+import java.util.List;
+
+@Entity(name = "hotels")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,11 +19,21 @@ public class Hotel {
 
     private String name;
 
-    private String location;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id")
+    private Location location;
 
     private String description;
 
-    private Integer roomsAvailable;
+    private String imageUrl;
 
-    private Double pricePerNight;
+    private boolean isActive;
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Room> rooms;
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<HotelFacility> hotelFacilities;
 }
