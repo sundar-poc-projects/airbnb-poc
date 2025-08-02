@@ -1,5 +1,6 @@
 package com.ko.hotel.controller;
 
+import com.ko.hotel.dto.response.HotelResponseDto;
 import com.ko.hotel.entity.Hotel;
 import com.ko.hotel.service.HotelService;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,12 @@ public class HotelController {
     private final HotelService hotelService;
 
     @PostMapping
-    public ResponseEntity<Hotel> createHotel(@RequestBody Hotel hotel) {
+    public ResponseEntity<HotelResponseDto> createHotel(@RequestBody Hotel hotel) {
         return ResponseEntity.ok(hotelService.saveHotel(hotel));
     }
 
     @GetMapping
-    public ResponseEntity<List<Hotel>> getAllHotel(){
+    public ResponseEntity<List<HotelResponseDto>> getAllHotel(){
         return ResponseEntity.ok(hotelService.getAllHotels());
     }
 

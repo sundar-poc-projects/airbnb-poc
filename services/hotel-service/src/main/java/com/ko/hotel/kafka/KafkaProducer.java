@@ -2,11 +2,13 @@ package com.ko.hotel.kafka;
 
 import com.ko.hotel.entity.Hotel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class KafkaProducer {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
@@ -14,6 +16,6 @@ public class KafkaProducer {
 
     public void sendHotelEvent(String hotel) {
         kafkaTemplate.send(TOPIC, hotel);
-        System.out.println("📤 Hotel event sent to Kafka: " + hotel);
+        log.info("Hotel event sent to Kafka : {}",hotel);
     }
 }

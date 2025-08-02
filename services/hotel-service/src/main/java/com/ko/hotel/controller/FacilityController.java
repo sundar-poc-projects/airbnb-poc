@@ -1,5 +1,6 @@
 package com.ko.hotel.controller;
 
+import com.ko.hotel.dto.response.FacilityResponseDto;
 import com.ko.hotel.entity.Facility;
 import com.ko.hotel.entity.Hotel;
 import com.ko.hotel.service.FacilityService;
@@ -15,12 +16,12 @@ import java.util.List;
 public class FacilityController {
     private final FacilityService facilityService;
     @PostMapping
-    public ResponseEntity<Facility> createFacility(@RequestBody Facility facility) {
+    public ResponseEntity<FacilityResponseDto> createFacility(@RequestBody Facility facility) {
         return ResponseEntity.ok(facilityService.saveFacility(facility));
     }
 
     @GetMapping
-    public ResponseEntity<List<Facility>> getAllFacilities(){
+    public ResponseEntity<List<FacilityResponseDto>> getAllFacilities(){
         return ResponseEntity.ok(facilityService.getAllFacilities());
     }
 }

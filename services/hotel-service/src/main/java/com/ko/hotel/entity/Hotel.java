@@ -1,13 +1,15 @@
 package com.ko.hotel.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
 @Entity(name = "hotels")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -30,10 +32,24 @@ public class Hotel {
     private boolean isActive;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonManagedReference("hotel-rooms")
     private List<Room> rooms;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonManagedReference("hotel-facilities")
     private List<HotelFacility> hotelFacilities;
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location=" + location +
+                ", description='" + description + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", isActive=" + isActive +
+                ", rooms=" + rooms +
+                ", hotelFacilities=" + hotelFacilities +
+                '}';
+    }
 }

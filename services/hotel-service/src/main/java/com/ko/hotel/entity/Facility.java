@@ -1,18 +1,16 @@
 package com.ko.hotel.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
 
 @Entity(name = "facilities")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class Facility {
     @Id
@@ -20,4 +18,12 @@ public class Facility {
     private Long id;
 
     private String displayName;
+
+    @Override
+    public String toString() {
+        return "Facility{" +
+                "id=" + id +
+                ", displayName='" + displayName + '\'' +
+                '}';
+    }
 }

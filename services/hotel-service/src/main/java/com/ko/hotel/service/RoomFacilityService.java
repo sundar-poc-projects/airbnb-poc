@@ -1,10 +1,11 @@
 package com.ko.hotel.service;
 
+import com.ko.hotel.dto.response.RoomFacilityResponseDto;
 import com.ko.hotel.entity.RoomFacility;
 
 import java.util.List;
 
 public interface RoomFacilityService {
-    RoomFacility saveRoomFacility(RoomFacility roomFacility);
-    List<RoomFacility> getAllRoomFacilities();
+    RoomFacilityResponseDto saveRoomFacility(RoomFacility roomFacility);
+    List<RoomFacilityResponseDto> getAllRoomFacilities();
 }

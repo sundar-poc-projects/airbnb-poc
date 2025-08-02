@@ -1,18 +1,18 @@
 package com.ko.hotel.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity(name = "rooms")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class Room {
     @Id
@@ -20,6 +20,7 @@ public class Room {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference("hotel-rooms")
     private Hotel hotel;
 
     private String displayName;
@@ -31,6 +32,18 @@ public class Room {
     private double price;
 
     @OneToMany(mappedBy = "room", cascade =  CascadeType.ALL)
-    @JsonIgnore
+    @JsonManagedReference("room-facilities")
     private List<RoomFacility> roomFacilities;
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", displayName='" + displayName + '\'' +
+                ", isActive=" + isActive +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", roomFacilities=" + roomFacilities +
+                '}';
+    }
 }

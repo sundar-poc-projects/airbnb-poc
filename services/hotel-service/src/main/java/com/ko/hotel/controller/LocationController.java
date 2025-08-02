@@ -1,5 +1,6 @@
 package com.ko.hotel.controller;
 
+import com.ko.hotel.dto.response.LocationResponseDto;
 import com.ko.hotel.entity.Location;
 import com.ko.hotel.service.LocationService;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,12 @@ public class LocationController {
     private final LocationService locationService;
 
     @PostMapping
-    public ResponseEntity<Location> createLocation(@RequestBody Location location){
+    public ResponseEntity<LocationResponseDto> createLocation(@RequestBody Location location){
         return ResponseEntity.ok(locationService.saveLocation(location));
     }
 
     @GetMapping
-    public ResponseEntity<List<Location>> getAllLocations(){
+    public ResponseEntity<List<LocationResponseDto>> getAllLocations(){
         return ResponseEntity.ok(locationService.getAllLocations());
     }
 }

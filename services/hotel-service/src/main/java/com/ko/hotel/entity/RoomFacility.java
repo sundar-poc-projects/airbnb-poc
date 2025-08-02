@@ -1,14 +1,14 @@
 package com.ko.hotel.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -21,7 +21,17 @@ public class RoomFacility {
     private Facility facility;
 
     @ManyToOne
+    @JsonBackReference("room-facilities")
     private Room room;
 
     private boolean isActive;
+
+    @Override
+    public String toString() {
+        return "RoomFacility{" +
+                "id=" + id +
+                ", facility=" + facility +
+                ", isActive=" + isActive +
+                '}';
+    }
 }
