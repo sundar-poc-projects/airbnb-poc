@@ -37,14 +37,13 @@ public class HotelServiceImpl implements HotelService {
         hotelRequest.setLocation(existingLocation);
         Hotel savedHotel = hotelRepository.save(hotelRequest);
         log.info("Hotel saved successfully {} ",savedHotel);
-        HotelResponseDto hotelResponseDto = HotelResponseDto.buildDto(savedHotel);
         try {
-            String hotelJson = objectMapper.writeValueAsString(hotelResponseDto);
+            String hotelJson = objectMapper.writeValueAsString(savedHotel);
             kafkaProducer.sendHotelEvent(hotelJson);
         } catch (Exception e) {
             log.info("Exception occurred during queue insertion. {}",e);
         }
-        return hotelResponseDto;
+        return HotelResponseDto.buildDto(savedHotel);
     }
 
     @Override
