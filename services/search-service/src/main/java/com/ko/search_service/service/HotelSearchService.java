@@ -6,12 +6,11 @@ import java.util.List;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
-import com.ko.search_service.entity.HotelDocument;
+import com.ko.search_service.entity.Hotel;
 import com.ko.search_service.repository.HotelRepository;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,17 +25,17 @@ public class HotelSearchService {
         this.elasticsearchClient = elasticsearchClient;
     }
 
-    public List<HotelDocument> searchByLocation(String location) {
+    public List<Hotel> searchByLocation(String location) {
         try {
-            SearchResponse<HotelDocument> response = elasticsearchClient.search(s -> s
+            SearchResponse<Hotel> response = elasticsearchClient.search(s -> s
                             .index("hotels")
                             .query(q -> q
-                                    .match(m -> m
-                                            .field("location")
+                                    .multiMatch(m -> m
+                                            .fields("location.city", "location.district", "location.state", "location.street")
                                             .query(location)
                                     )
                             ),
-                    HotelDocument.class
+                    Hotel.class
             );
 
             return response.hits().hits().stream()
@@ -44,14 +43,14 @@ public class HotelSearchService {
                     .collect(Collectors.toList());
 
         } catch (IOException e) {
-            throw new RuntimeException("Failed to search hotels by city", e);
+            throw new RuntimeException("Failed to search hotels by location", e);
         }
     }
 
 
-    public List<HotelDocument> findAll() {
-        Iterable<HotelDocument> iterable = hotelRepository.findAll();
-        List<HotelDocument> list = new ArrayList<>();
+    public List<Hotel> findAll() {
+        Iterable<Hotel> iterable = hotelRepository.findAll();
+        List<Hotel> list = new ArrayList<>();
         iterable.forEach(list::add);
         return list;
     }

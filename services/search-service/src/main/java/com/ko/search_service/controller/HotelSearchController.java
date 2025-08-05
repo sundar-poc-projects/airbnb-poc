@@ -1,14 +1,15 @@
 package com.ko.search_service.controller;
 
-import com.ko.search_service.entity.HotelDocument;
+import com.ko.search_service.dto.response.HotelResponseDto;
+import com.ko.search_service.entity.Hotel;
 import com.ko.search_service.service.HotelSearchService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,15 +23,21 @@ public class HotelSearchController {
     }
 
     @GetMapping("/location/{location}")
-    public List<HotelDocument> searchByCity(@PathVariable String location) {
-        return hotelSearchService.searchByLocation(location);
+    public ResponseEntity<List<HotelResponseDto>> searchByCity(@PathVariable String location) {
+        List<Hotel> hotels = hotelSearchService.searchByLocation(location);
+        return ResponseEntity.ok(hotels.stream()
+                            .map(hotel -> HotelResponseDto.buildDto(hotel))
+                            .collect(Collectors.toList())
+        );
     }
 
     @GetMapping
-    public List<HotelDocument> getAllHotels() {
-        List<HotelDocument> all = hotelSearchService.findAll();
-        System.out.println(all);
-        return all;
+    public ResponseEntity<List<HotelResponseDto>> getAllHotels() {
+        List<Hotel> hotels = hotelSearchService.findAll();
+        return ResponseEntity.ok(hotels.stream()
+                .map(hotel -> HotelResponseDto.buildDto(hotel))
+                .collect(Collectors.toList())
+        );
     }
 }
 
